@@ -1,0 +1,14 @@
+package robin.scaffold.baisc.api;
+
+public interface HttpConstants {
+	int REPONSE_CODE_UNKNOW = 1;
+	int REPONSE_CODE_OK = 200;
+	int REPONSE_CODE_BAD_REQUEST = 400;
+	int REPONSE_CODE_UNAUTHORIZATION = 401;
+	int REPONSE_CODE_NOT_FOUND = 404;
+	int REPONSE_CODE_BAD_SERVER_ERR = 500;
+	int REPONSE_CODE_BAD_SERVER_UNAVALIABLE = 503;
+	
+	String REQUEST_METHOD_GET = "GET";
+	String REQUEST_METHOD_POST = "POST";
+}
