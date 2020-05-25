@@ -45,18 +45,32 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation files('libs/sun.misc.BASE64Decoder.jar')
     implementation 'androidx.appcompat:appcompat:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    //multidex
     implementation 'com.android.support:multidex:1.0.1'
+    //retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava:2.9.0'
+    //rxjava
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
     implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
+    //rxlifecycle
+    implementation 'com.trello.rxlifecycle4:rxlifecycle:4.0.0'
+    implementation 'com.trello.rxlifecycle4:rxlifecycle-components:4.0.0'
+    //okhttp
     implementation 'com.squareup.okhttp3:logging-interceptor:3.7.0'
+    //gson
     implementation 'com.google.code.gson:gson:2.8.0'
     //Sonic
     implementation 'com.tencent.sonic:sdk:3.0.0-beta'
-    implementation files('libs/sun.misc.BASE64Decoder.jar')
+    //butterknife
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    //状态栏
+    implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
+
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
 }

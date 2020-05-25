@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="2dp"
+    android:background="@android:color/white">
+
+    <RelativeLayout
+        android:id="@+id/re_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/bottom_line">
+
+        <LinearLayout
+            android:id="@+id/left_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:gravity="center">
+
+            <ImageView
+                android:paddingLeft="15.5dp"
+                android:paddingRight="15.5dp"
+                android:paddingTop="11.5dp"
+                android:paddingBottom="11.5dp"
+                android:id="@+id/left_img"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="center" />
+
+            <TextView
+                android:id="@+id/left_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/right_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/right_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black" />
+
+            <ImageView
+                android:id="@+id/right_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/title_txt"
+            android:layout_width="wrap_content"
+            android:maxWidth="300dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+</RelativeLayout>
