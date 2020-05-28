@@ -2,35 +2,24 @@ package robin.scaffold.baisc.base;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
-import android.util.Log;
-import android.view.View;
 
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 
-import com.gyf.immersionbar.ImmersionBar;
 import com.trello.rxlifecycle4.components.support.RxAppCompatActivity;
+
+import org.reactivestreams.Subscription;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import robin.scaffold.baisc.BaseApplication;
-import robin.scaffold.baisc.R;
-import robin.scaffold.baisc.rx.RxBus;
-import robin.scaffold.baisc.rx.event.ConnectionChangeEvent;
 import robin.scaffold.baisc.util.DisplayUtil;
-import rx.Subscription;
-import rx.functions.Action1;
 
 
 public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatActivity implements IBaseView{
@@ -39,9 +28,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
     private Unbinder mUnbinder;
     private Handler mBaseHandler = new Handler();
     private Subscription mRxSub;
-    protected TitleManager titleManager;
+    protected TitleManager.Builder titleManagerBuidler;
     protected Activity context;
-    protected ImmersionBar mImmersionBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,10 +40,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
         DisplayUtil.setCustomDensity(this, getApplication());
 
         mUnbinder = ButterKnife.bind(this);
-        titleManager = new TitleManager(this);  //新添加标题栏
+        titleManagerBuidler = new TitleManager(this).new Builder(this);  //新添加标题栏
         mPresenter = initPresenter();
 
-        attachView();
         initViews();
         initData();
     }
@@ -67,8 +54,6 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
     protected abstract void initData();
 
     protected abstract P initPresenter();
-
-    protected abstract void attachView();
 
 
     @Override
@@ -89,7 +74,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends RxAppCompatA
         if (permissions == null || permissions.length < 1) {
             return true;
         }
-        if (Build.VERSION.SDK_INT < 23) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return true;
         }
         for (String permission : permissions) {

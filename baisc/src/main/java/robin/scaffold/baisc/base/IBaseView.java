@@ -19,12 +19,4 @@ public interface IBaseView {
      * @param msg
      */
     void showError(String msg);
-
-    /**
-     * 绑定生命周期
-     *
-     * @param <T>
-     * @return
-     */
-    <T> LifecycleTransformer<T> bindToLifecycle();
 }

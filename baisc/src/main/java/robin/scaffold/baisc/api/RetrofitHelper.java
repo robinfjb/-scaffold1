@@ -3,10 +3,7 @@ package robin.scaffold.baisc.api;
 
 import android.util.Log;
 
-
 import androidx.annotation.Nullable;
-
-import org.reactivestreams.Subscriber;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -17,8 +14,8 @@ import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableSource;
 import io.reactivex.rxjava3.core.ObservableTransformer;
 import io.reactivex.rxjava3.core.Observer;
-import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import me.jessyan.retrofiturlmanager.RetrofitUrlManager;
 import okhttp3.Cache;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -28,7 +25,7 @@ import okio.BufferedSource;
 import retrofit2.HttpException;
 import retrofit2.Response;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory;
 import robin.scaffold.baisc.BaseApplication;
 import robin.scaffold.baisc.api.converter.StringConverterFactory;
 import robin.scaffold.baisc.api.interceptor.HeaderInterceptor;
@@ -49,7 +46,7 @@ public class RetrofitHelper {
     private static RetrofitHelper sRetrofitHelper;
     private static OkHttpClient mOkHttpClient;
     private static Retrofit sRetrofit;
-    private static final String BASE_URL = "设置baseurl";
+    private static final String BASE_URL = "http://www.weather.com.cn";
 
     final ObservableTransformer mSchedulersTransformer = new ObservableTransformer() {
 
@@ -104,8 +101,8 @@ public class RetrofitHelper {
     }
 
 
-    public IApiService createApiService() {
-        return getRetrofit().create(IApiService.class);
+    public <T> T createApiService(Class<T> clazz) {
+        return getRetrofit().create(clazz);
     }
 
     public Retrofit getRetrofit() {
@@ -118,7 +115,7 @@ public class RetrofitHelper {
                     .baseUrl(BASE_URL)
                     .client(mOkHttpClient)
                     .addConverterFactory(new StringConverterFactory())
-                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                     .build();
         }
     }
@@ -143,7 +140,7 @@ public class RetrofitHelper {
                 if (mOkHttpClient == null) {
                     File cacheFile = new File(BaseApplication.getContext().getCacheDir(), "HttpCache");
                     Cache cache = new Cache(cacheFile, 1024 * 1024 * 100); //100Mb
-                    mOkHttpClient = new OkHttpClient.Builder()
+                    mOkHttpClient = RetrofitUrlManager.getInstance().with(new OkHttpClient.Builder())
                             .retryOnConnectionFailure(false) //原来是false
                             .connectTimeout(30, TimeUnit.SECONDS)
                             .writeTimeout(30, TimeUnit.SECONDS)
@@ -151,8 +148,7 @@ public class RetrofitHelper {
                             .cache(cache)
                             .addInterceptor(new HeaderInterceptor())
                             .addInterceptor(new TokenInterceptor())
-                            .addInterceptor(logging)
-                            .build();
+                            .addInterceptor(logging).build();
                 }
             }
         }

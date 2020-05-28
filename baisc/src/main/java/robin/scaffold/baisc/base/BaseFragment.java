@@ -44,8 +44,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment {
         View view = inflater.inflate(attachLayoutRes(), container, false);
         mUnbinder = ButterKnife.bind(this, view);
         mPresenter = initPresenter();
-        attachView();
-        initStatusBar();
         initViews();
         initData();
         mIsInitView = true;
@@ -61,14 +59,8 @@ public abstract class BaseFragment<P extends BasePresenter> extends RxFragment {
 
     protected abstract P initPresenter();
 
-    protected abstract void attachView();
-
     protected abstract void lazyInitData();
 
-
-    public void initStatusBar() {
-
-    }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
